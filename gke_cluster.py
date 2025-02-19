@@ -2,7 +2,7 @@
 from typing import Optional, TypedDict
 
 from pulumi import Inputs, ResourceOptions
-from pulumi_gcp import container, organizations
+from pulumi_gcp import container
 from pulumi_gcp.config import project, zone
 import pulumi
 
@@ -74,27 +74,27 @@ class Cluster(pulumi.ComponentResource):
           lambda info: """apiVersion: v1
 clusters:
 - cluster:
-  certificate-authority-data: {0}
-  server: https://{1}
-name: {2}
+    certificate-authority-data: {0}
+    server: https://{1}
+  name: {2}
 contexts:
 - context:
-  cluster: {2}
-  user: {2}
-name: {2}
+    cluster: {2}
+    user: {2}
+  name: {2}
 current-context: {2}
 kind: Config
 preferences: {{}}
 users:
 - name: {2}
-user:
-  exec:
-    apiVersion: client.authentication.k8s.io/v1beta1
-    command: gke-gcloud-auth-plugin
-    installHint: Install gke-gcloud-auth-plugin for use with kubectl by following
-      https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
-    provideClusterInfo: true
-      """.format(info[2]['cluster_ca_certificate'], info[1], 'gke_{0}_{1}_{2}'.format(organizations.get_project().name, zone, info[0])))
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: gke-gcloud-auth-plugin
+      installHint: Install gke-gcloud-auth-plugin for use with kubectl by following
+        https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+      provideClusterInfo: true
+      """.format(info[2]['cluster_ca_certificate'], info[1], '{0}_{1}_{2}'.format(project, zone, info[0])))
 
       self.kubeconfig = pulumi.Output.secret(k8s_config)
 
