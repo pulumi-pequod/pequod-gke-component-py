@@ -34,9 +34,9 @@ class Cluster(pulumi.ComponentResource):
       super().__init__('gke:pequod:Cluster', name, {}, opts)
 
       latest_gke_version = container.get_engine_versions().latest_master_version
-      master_version = args.master_version or latest_gke_version
-      node_count = args.node_count or 3
-      node_machine_type = args.node_machine_type or "n1-standard-1"
+      master_version = args.get("master_version") or latest_gke_version
+      node_count = args.get("node_count") or 3
+      node_machine_type = args.get("node_machine_type") or "n1-standard-1"
 
       k8s_cluster = container.Cluster(f"{name}-cluster", 
                                       initial_node_count=1,
