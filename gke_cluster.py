@@ -2,7 +2,7 @@
 from typing import Optional, TypedDict
 
 from pulumi import Inputs, ResourceOptions
-from pulumi_gcp import container
+from pulumi_gcp import container, organizations
 from pulumi_gcp.config import project, zone
 import pulumi
 
@@ -94,7 +94,7 @@ user:
     installHint: Install gke-gcloud-auth-plugin for use with kubectl by following
       https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
     provideClusterInfo: true
-      """.format(info[2]['cluster_ca_certificate'], info[1], 'gke_{0}_{1}_{2}'.format(project, zone, info[0])))
+      """.format(info[2]['cluster_ca_certificate'], info[1], 'gke_{0}_{1}_{2}'.format(organizations.get_project().name, zone, info[0])))
 
       self.kubeconfig = pulumi.Output.secret(k8s_config)
 
