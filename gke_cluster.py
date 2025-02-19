@@ -31,7 +31,7 @@ class Cluster(pulumi.ComponentResource):
         opts: Optional[ResourceOptions] = None,
   ):
 
-      super().__init__('pequod:gke:Cluster', name, {}, opts)
+      super().__init__('gke:pequod:Cluster', name, {}, opts)
 
       latest_gke_version = container.get_engine_versions().latest_master_version
       master_version = args.master_version or latest_gke_version

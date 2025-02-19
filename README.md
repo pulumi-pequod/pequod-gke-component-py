@@ -9,7 +9,9 @@ Implements GKE component provider (components as components) in Python that can 
 
 # Usage
 To use the component, in the folder that contains the Pulumi program (regardless of language) that is using the component, run
-`pulumi package add https://github.com/pulumi-pequod/pequod-gke-component-py`
+```bash
+pulumi package add https://github.com/pulumi-pequod/pequod-gke-component-py
+```
 
 Can also specify a given release as follows:
 `pulumi package add https://github.com/pulumi-pequod/pequod-gke-component-py@v1.0.0`
